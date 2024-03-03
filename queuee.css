@@ -1,0 +1,206 @@
+/* {
+    margin: 0%;
+    padding: 0%;
+}
+html, body {
+    height: 100%;
+}*/ 
+
+body{
+    display: flex; /* Use flexbox to arrange elements side by side */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    height: 150%; /* Make the container full height of the viewport */
+    width:100%;
+    margin-left: -50px;
+
+}
+
+.img {
+    width: 30%; /* Take up one-third of the container width */
+    background-size:cover; /* Scale the image to cover the container */
+     background-position: center;/* Center the image */
+    height: 100%; /* Make the image div full height of the container */
+    width: 75%;
+    transition: opacity 1s ease-in-out;
+}
+.cont{
+    width:100%;/* Take up two-third of the container width */
+    flex-direction: column; /* Arrange buttons vertically */
+    align-items: center; /* Center buttons horizontally */
+    justify-content: center;
+    text-align: center;
+    background-color: beige;
+height: 200px;
+}
+
+button{
+border-radius:  12px;
+font-size: 24px;
+width: 500px;
+height: 120px;
+margin: 10px; /* Add some spacing between buttons */
+padding: 10px 20px;
+text-align: center;
+line-height: normal;  
+}
+h3{
+text-align: center;
+text-decoration: solid;
+font-family: 'Times New Roman', Times, serif;
+font-size: 20px;
+}
+.track{
+
+    align-items: center; 
+    justify-content: center;
+    border-radius: 5px ;
+    background-color: aquamarine;
+height: 150px;
+width: 600px;
+
+
+}
+.track.h3{
+text-decoration: solid;
+font-size: 25px;
+font-family: 'Times New Roman', Times, serif;
+font-weight: 100;
+
+
+}
+.bg{
+    width: 100%;
+    height:auto;
+	min-height:100vh;
+    background-image:url(warehouse.jpeg);
+    background-size: 100% 100%;
+    background-position: top center;
+  }
+
+  .content{
+margin-top: 20%;
+  }
+
+  .centered {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.InputStyle{
+  border-radius: 25px;
+  border: solid 1px white;
+ background: transparent;
+ width: 300px;
+    padding: 10px 20px;
+}
+
+
+
+input,input::-webkit-input-placeholder {
+    font-size: 12px;
+  color:white;
+}
+
+.social-btn{
+ position: absolute; 
+  bottom: 20px;
+  left: 47%;
+}
+
+i{
+ padding:5px;
+  color:white;
+
+}
+
+input, input:focus{
+  border: solid 1px white;
+        outline:0; 
+        -webkit-appearance:none;
+        box-shadow: nones;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+}
+
+.secondLine{
+  font-weight: 350;
+  font-size:15px;
+  margin-bottom: 15%;
+  color: white;
+
+}
+
+.firstLine{
+font-size: 30px;
+color: white;
+}
+
+@media only screen and (max-width: 600px) {
+  .firstLine{
+font-size: 20px;
+}
+}
+.indicator{
+  margin-left: 50%;
+  margin-top: -20%;
+  position:relative;
+  width:50px;
+  height:50px;
+  
+  transform:rotate(-45deg);
+  span{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    box-sizing:border-box;
+    border:none;
+    border-bottom:3px solid crimson;
+    border-right:3px solid crimson;
+    animation:animate 1s linear infinite;
+    &:nth-child(1){
+      top:-30px;
+      left:-30px;
+      animation-delay:0s;
+    }
+    &:nth-child(2){
+      top:-15px;
+      left:-15px;
+      animation-delay:0.2s;
+    }
+    &:nth-child(3){
+      top:0;
+      left:0;
+      animation-delay:0.4s;
+    }
+    &:nth-child(4){
+      top:15px;
+      left:15px;
+      animation-delay:0.6s;
+    }
+    &:nth-child(5){
+      top:30px;
+      left:30px;
+      animation-delay:0.8s;
+    }
+  }
+}
+
+@keyframes animate{
+0%{
+  border-color:crimson;
+  transform:translate(0,0);
+}
+ 20%{
+  border-color:#fff;
+   transform:translate(15px,15px);
+}
+ 20.1%,100%{
+  border-color:crimson;
+}
+}
+

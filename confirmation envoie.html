@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title> confirmation de tracking </title>
+            <link rel="stylesheet" href="queuee.css">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+            </head>
+            <body>
+                
+            
+               
+                <div class="bg text-center">
+                
+                  <!--Div for Centered Text & Input--> 
+                  <div class="centered">
+                   
+                     <p class="firstLine"> CONFIRMATION DE L'ENVOIE <br>
+                     قبل التاكيد يرجى منكم الاطلاع حول شروط النقل العامة لشركة ياليدين و ايضا مدة النقل</br>
+                    </p>
+                    
+                    <form id="trackingForm" method="post">
+                    
+                      <button type="button" name="env" onclick="print()"  class="btn btn-success btn-lg" style="height: auto; width: auto;">Confirmer <br> تأكيد </button>  
+                                    </form>
+                                    <br>
+                                  <a href="clientinterface.php" type="button" class="btn btn-danger btn-lg"> Retour <br> الرجوع الى القائمة الرئيسية </a>                       </div>
+                                  <iframe id="external-content" style="display:none;"></iframe>             
+                                  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                  <script>
+function print(){
+$.ajax({
+  type:'POST',
+  url: "dataenvoie.php",
+  success: function(response) {
+    var iframe = document.getElementById('external-content');
+    iframe.contentWindow.document.open();
+                    iframe.contentWindow.document.write(response);
+                    iframe.contentWindow.document.close();
+                    iframe.onload = function() {
+                        iframe.contentWindow.print();
+                    
+                    };                    
+}});setTimeout(function() {
+                            window.location.href='clientinterface.php';
+                        }, 1000); 
+
+}
+                                    </script>           
+            </body>
+
+           
+            </html>

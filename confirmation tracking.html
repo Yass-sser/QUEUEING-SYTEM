@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> confirmation de tracking </title>
+<link rel="stylesheet" href="queuee.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="bg text-center">
+    <div class="centered">
+        <p class="firstLine"> CONFIRMATION DE TRACKING <br>
+          Merci de Saisie le tracking recu par SMS<br>يرجى ادخال رقم التتبع الخاص بالطرد المتلقى في الرسالة النصية
+          </p>
+        <form id="trackingForm" method="post">
+            <p>
+              <input type="text" class="InputStyle" name="trackr" placeholder="YAL-XXXXXX        
+              &#xf0e0;" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, FontAwesome,; font-size: 15px; text-align: center; font-weight: 700;" type="text">
+            </p>
+            <button type="button" onclick="submitForm()" class="btn btn-success btn-lg" id="submitBtn" style="height: auto; width: auto;">Confirmer <br> طباعة التذكرة </button>
+        </form>
+                          <br>
+                          <a href="clientinterface.php" type="button" class="btn btn-danger btn-lg"> Retour <br> الرجوع الى القائمة الرئيسية </a>                       </div>
+                    </div>
+                    <iframe id="external-content" style="display:none;"></iframe>             
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var isFormSubmitted = false; // Flag to track form submission
+
+        function submitForm() {
+            if (isFormSubmitted) {
+            // If the form is already submitted, return to prevent further clicks
+            return;
+        }
+
+        // Disable the button to prevent double-click
+        $("#submitBtn").prop("disabled", true);
+
+            var inputData = $("input[name='trackr']").val();
+            $.ajax({
+                type: "POST",
+                url: "t1.php",
+                data: { trackr: inputData },
+                success: function(response) {
+                    var iframe = document.getElementById('external-content');
+                    iframe.contentWindow.document.open();
+                    iframe.contentWindow.document.write(response);
+                    iframe.contentWindow.document.close();
+                    iframe.onload = function() {
+                        iframe.contentWindow.print();                    
+                    };
+                }
+            });setTimeout(function() {
+                            window.location.href='clientinterface.php';
+                        }, 1000); 
+        }                    
+    </script>
+</body>
+</html>

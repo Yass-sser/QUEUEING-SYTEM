@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="shortcut icon" href="/proj/queue.svg" type="image/x-icon" />
+      <title>Queuing-System</title>
+      <!-- Google Font: Source Sans Pro -->
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="asset/fontawesome/css/all.min.css">
+      <!-- Theme style -->
+      <link rel="stylesheet" href="adminlte.min.css">
+      <link rel="stylesheet" href="sstyle.css">
+<style>
+body{
+   background-color: rgb(247, 245, 245);
+}
+    video {
+  width: 100%    !important;
+  height: 80vh   !important;
+        object-fit: cover; // use "cover" to avoid distortion
+        position: absolute;
+        border: 3px solid #dc3545;
+        border-radius: 3px; 
+    }
+
+   
+</style>
+   </head>
+   <body style=" margin: 0;
+   width: 100vw;
+   height: 100vh;
+   overflow: hidden;">
+      <section class="content">
+            <div  class="container-fluid" style="width: 100vw;
+            height: 100vh;">
+               <div style="display: flex;" class="row">
+                  <div class="col-lg-12">
+                     <div class="info-box">
+                        <marquee><h1 class="txt-color" style="font-weight: bold;">YALIDINE EXPRESS AGENCE BATNA  </h1></marquee>
+                     </div>
+                  </div>
+                  <div class="guichet" style="
+                  border: 3px solid #dc3545;
+                  border-radius: 4px;
+                  background-color:beige;
+                  width: 450px;
+                  height: 350px;
+                  margin-left: 5%;
+                  margin-top: 5%;
+              ">
+                 <h2 style="text-align: center; margin-top: 20px;">Client Actuelle</h2>
+                 <p style="text-align: center; justify-content: center; font-size: 50px; font-style: italic; font-weight: bolder; margin-top: 50px; margin-left: -30px;">
+                    GUICHET: <span id="guichet-num"></span><br> TICKET: <span id="ticket-num"></span>
+                 </p>
+              </div>
+              <div class="col-sm-7" style="max-height:580px;  ">
+               <video src="vid.mp4" autoplay muted loop style="width: 100%; height: 100%;"></video>
+           </div>
+                  <div class="col-sm-12">
+                     <div class="info-box" style="background-color: #dc3545;">
+                        <marquee><h1 class="txt-color" style="color: #fdf3f4; font-weight: bolder; "> Pour tout Réclamation notre Center d'appel 7j/24 </h1></marquee>
+                     </div> 
+                  </div>
+               </div>
+            </div>
+         </section>
+         <div class="notification" id="clientNotification">
+            <p id="notification-text"></p>
+        </div>
+        <script>
+         function playAudio() {
+           const audio = new Audio('mixkit-clear-announce-tones-2861.wav');
+           audio.play()
+             .then(() => {
+               console.log('Audio played successfully');
+             })
+             .catch((error) => {
+               console.error('Error playing audio:', error);
+             });
+         }
+       
+         function showPopup(ticketNumber, guichetNumber) {
+           const popup = document.createElement('div');
+           popup.className = 'popup';
+           popup.innerHTML = `التذكرة ${ticketNumber}<br> الشباك ${guichetNumber}`;
+       
+           document.body.appendChild(popup);
+       
+           const ticketNum = document.getElementById('ticket-num');
+           const guichetNum = document.getElementById('guichet-num');
+           ticketNum.textContent = ticketNumber;
+           guichetNum.textContent = guichetNumber;
+           playAudio(); // Trigger the audio
+       
+           const speechMsg = new SpeechSynthesisUtterance();
+           speechMsg.text = `Ticket numéro ${ticketNumber}. guichet numéro. ${guichetNumber}`;
+           speechMsg.lang = 'fr-FR';
+       
+           // Speak the French part
+           speechSynthesis.speak(speechMsg);
+       
+           setTimeout(() => {
+             popup.classList.add('hide');
+             setTimeout(() => {
+               document.body.removeChild(popup);
+               processingMessage = false; // Reset the flag when animation completes
+               setTimeout(processNextMessage, 500); // Introduce a small delay before processing the next message
+             }, 900);
+           }, 9000);
+         }
+       
+         function processNextMessage() {
+           processingMessage = true; // Set the flag before processing the next message
+           if (messageQueue.length > 0) {
+             const nextMessage = messageQueue.shift();
+             showPopup(nextMessage.ticketNumber, nextMessage.guichetNumber);
+           } else {
+             processingMessage = false; // Reset the flag if there are no more messages
+           }
+         }
+       
+         const webSocket = new WebSocket('ws://localhost:8080');
+         webSocket.onopen = function (event) {
+           console.log('WebSocket connection opened.');
+         };
+       
+         // Maintain a queue for incoming messages
+         const messageQueue = [];
+         let processingMessage = false;
+       
+         // Update the WebSocket message handling to enqueue messages
+         webSocket.onmessage = function (event) {
+           const message = event.data;
+           if (message.startsWith('Prochaine Client: ') || message.startsWith('prochaineclientenvoie: ')) {
+             const data = message.replace(/^Prochaine Client: |prochaineclientenvoie: /, '').split(',');
+             const ticketNumber = data[1].trim().split(':')[1];
+             const guichetNumber = data[0].trim().split(' ')[1]; // Extracting the guichet number
+       
+             // Check if the message has already been processed
+             if (!messageQueue.some(msg => msg.ticketNumber === ticketNumber && msg.guichetNumber === guichetNumber)) {
+               // Enqueue the message
+               messageQueue.push({ ticketNumber, guichetNumber });
+       
+               // If not already processing a message, start displaying it
+               if (!processingMessage) {
+                 processNextMessage();
+               }
+             }
+           }
+         };
+       </script>
+   </body>
+</html>

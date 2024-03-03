@@ -1,0 +1,8 @@
+# Ignore vendor folder
+vendor/
+
+# Ignore any logs
+*.log
+
+# Ignore sensitive information (e.g., configuration files with API keys)
+config.php

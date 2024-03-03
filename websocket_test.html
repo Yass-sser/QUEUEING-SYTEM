@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+    <div id="output"></div>
+    
+    <script>
+        const output = document.getElementById('output');
+        const webSocket = new WebSocket('ws://192.168.137.225(:8080'); // Replace with your WebSocket server URL
+
+        socket.addEventListener('open', (event) => {
+            output.innerHTML += '<p>Connected to the WebSocket server.</p>';
+        });
+
+        socket.addEventListener('message', (event) => {
+            output.innerHTML += '<p>Received message: ' + event.data + '</p>';
+        });
+
+        socket.addEventListener('close', (event) => {
+            output.innerHTML += '<p>Connection closed.</p>';
+        });
+
+        socket.addEventListener('error', (event) => {
+            output.innerHTML += '<p>Error: ' + event.data + '</p>';
+        });
+    </script>
+</body>
+</html>

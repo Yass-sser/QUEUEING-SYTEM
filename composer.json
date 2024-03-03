@@ -1,0 +1,16 @@
+{
+    "autoload": {
+        "psr-4": {
+            "WebSocketHandler\\": "WebSocketHandler"
+        }
+    }
+     
+    ,
+    
+        "require": {
+            "cboden/ratchet": "^0.4.3",
+            "dompdf/dompdf": "^1.0",
+        "php-webdriver/webdriver": "^1.1"
+        }
+    
+}
